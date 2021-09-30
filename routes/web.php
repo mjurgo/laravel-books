@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'StaticPageController@home');
+Route::get('/', 'StaticPageController@home')
+    ->name('static_pages.home');
 
 Route::prefix('books')->name('books.')->group(function () {
     Route::get('', 'BookController@index')
@@ -50,3 +51,9 @@ Route::prefix('genres')->name('genres.')->group(function () {
     Route::get('/{id}', 'GenreController@show')
         ->name('show');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';

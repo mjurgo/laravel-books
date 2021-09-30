@@ -1,14 +1,6 @@
 @extends('layouts.base')
 
 @section('content')
-    <h1>Hello, World!</h1>
-    <h2>Recent books</h2>
-    <ul>
-        @foreach ($recentBooks as $book)
-            <li>
-                <a href="{{ route('books.show', $book) }}">{{ $book->title }}</a>
-                ({{ $book->author->name() }})
-            </li>
-        @endforeach
-    </ul>
+    <h1 class="text-4xl text-center">Hello, books!</h1>
+    @include('shared.recent_books')
 @endsection

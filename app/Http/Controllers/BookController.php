@@ -54,8 +54,11 @@ class BookController extends Controller
     {
         $book = Book::find($id);
         $authors = Author::all();
+        $genres = Genre::all();
         
-        return view('books.edit', ['book' => $book, 'authors' => $authors]);
+        return view('books.edit', [
+            'book' => $book, 'authors' => $authors, 'genres' => $genres
+        ]);
     }
 
     public function update(BookRequest $request, $id)
@@ -68,6 +71,7 @@ class BookController extends Controller
         $book->description = $request->input('description');
 
         $book->save();
+        $book->genres()->sync($request->input('genres'));
 
         return redirect(route('books.show', $book))
             ->with('message', 'Książka zaktualizowana.');

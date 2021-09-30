@@ -25,6 +25,6 @@ class Book extends Model
 
     public function scopeRecent($query)
     {
-        return $query->orderByDesc('created_at')->limit(5);
+        return $query->with('genres')->orderByDesc('created_at')->limit(5);
     }
 }

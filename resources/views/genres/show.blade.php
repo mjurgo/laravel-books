@@ -1,10 +1,10 @@
 @extends('layouts.base')
 
 @section('content')
-    <h1>Gatunek: {{ $genre->name }}</h1>
+    <h1 class="text-4xl text-center">Gatunek: {{ $genre->name }}</h1>
     <ul>
         @foreach ($genre->books as $book)
-            <li><a href="{{ route('books.show', $book) }}">{{ $book->title }}</a></li>
+            <li class="my-2"><a href="{{ route('books.show', $book) }}">{{ $book->title }}</a></li>
         @endforeach
     </ul>
 @endsection
