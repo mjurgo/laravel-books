@@ -5,6 +5,9 @@
     <div>
         <a href="{{ route('books.edit', $book) }}"><button class="bg-blue-500 rounded p-2 text-white">Edytuj</button></a>
     </div>
+    <div class="my-2">
+        <b>Ocena użytkowników:</b> <span class="text-green-500 text-2xl">{{ $book->score() }}</span>
+    </div>
     <ul>
         <li class="my-2"><b>Autor:</b> <a href="{{ route('authors.show', $book->author) }}" class="text-blue-500 text-2xl">{{ $book->author->name() }}</a></li>
         <li class="my-2"><b>Liczba stron:</b> {{ $book->length }}</li>
