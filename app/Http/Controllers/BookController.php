@@ -2,34 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BookRequest;
-use App\Models\Author;
 use App\Models\Book;
 use App\Models\Genre;
+use App\Models\Author;
+use App\Http\Requests\BookRequest;
+use App\Interfaces\BookRepository as BookRepository;
 
 class BookController extends Controller
 {
+    private BookRepository $bookRepository;
+
+    public function __construct(BookRepository $bookRepository)
+    {
+        $this->bookRepository = $bookRepository;
+    }
+
     public function index()
     {
-        $books = Book::with('author')->simplePaginate();
-        
-        return view('books.index', ['books' => $books]);
+        return view('books.index', [
+            'books' => $this->bookRepository->allPaginated(15)
+        ]);
     }
 
     public function show(int $id)
     {
-        $book = Book::find($id);
-        
-        return view('books.show', ['book' => $book]);
+        return view('books.show', [
+            'book' => $this->bookRepository->get($id)]
+        );
     }
 
     public function create()
     {
-        $authors = Author::all();
-        $genres = Genre::all();
-
         return view('books.create', [
-            'authors' => $authors, 'genres' => $genres
+            'authors' => Author::all(),
+            'genres' => Genre::all()
         ]);
     }
 
@@ -52,12 +58,10 @@ class BookController extends Controller
 
     public function edit($id)
     {
-        $book = Book::find($id);
-        $authors = Author::all();
-        $genres = Genre::all();
-        
         return view('books.edit', [
-            'book' => $book, 'authors' => $authors, 'genres' => $genres
+            'book' => $this->bookRepository->get($id),
+            'authors' => Author::all(),
+            'genres' => Genre::all()
         ]);
     }
 
@@ -79,7 +83,7 @@ class BookController extends Controller
 
     public function destroy($id)
     {
-        $book = Book::find($id);
+        $book = $this->bookRepository->get($id);
         $book->delete();
 
         return redirect(route('books.index'))->with('message', 'Książka usunięta.');

@@ -2,4 +2,8 @@
 
 ## Current agenda
 
-- Getting books for user through ratings.
+- Creating repository.
+
+## TODO
+
+- Add validation (did it before but probably removed).
