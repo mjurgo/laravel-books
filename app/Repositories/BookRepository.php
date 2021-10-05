@@ -21,6 +21,6 @@ class BookRepository implements BookRepositoryInterface
 
     public function get($id)
     {
-        return Book::find($id);
+        return Book::with('ratings')->find($id);
     }
 }

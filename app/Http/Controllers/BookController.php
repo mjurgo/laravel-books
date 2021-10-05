@@ -26,6 +26,7 @@ class BookController extends Controller
 
     public function show(int $id)
     {
+        // dd($this->bookRepository->get($id));
         return view('books.show', [
             'book' => $this->bookRepository->get($id)]
         );

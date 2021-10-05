@@ -2,8 +2,11 @@
 
 ## Current agenda
 
-- Creating repository.
+- 
 
 ## TODO
 
-- Add validation (did it before but probably removed).
+- Authorize users.
+- Create admin panel.
+- Add search panel with laravel livewire.
+- Refactor ratings. Maybe move rating download to user model? It would make more sense to do User->bookRating($book->id) than $book->currentUserRating. Maybe.

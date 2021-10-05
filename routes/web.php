@@ -37,6 +37,8 @@ Route::prefix('books')->name('books.')->group(function () {
 
     Route::get('/{id}/edit', 'BookController@edit')
         ->name('edit');
+
+    Route::post('/{id}/rate', 'BookController@rate');
 });
 
 Route::prefix('authors')->name('authors.')->group(function () {
@@ -51,6 +53,11 @@ Route::prefix('genres')->name('genres.')->group(function () {
     Route::get('/{id}', 'GenreController@show')
         ->name('show');
 });
+
+Route::post('ratings', 'RatingController@store')
+    ->name('ratings.store');
+Route::put('/ratings/{id}', 'RatingController@update')
+    ->name('ratings.update');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
