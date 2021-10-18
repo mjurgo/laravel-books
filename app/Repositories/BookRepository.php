@@ -23,4 +23,18 @@ class BookRepository implements BookRepositoryInterface
     {
         return Book::with('ratings')->find($id);
     }
+
+    public function filterBy(?string $phrase, int $perPage)
+    {
+        $query = $this->bookModel
+            ->with('genres')
+            ->orderBy('created_at', 'desc');
+
+        if ($phrase)
+        {
+            $query->whereRaw('title like ?', ["{$phrase}%"]);
+        }
+
+        return $query->paginate($perPage);
+    }
 }

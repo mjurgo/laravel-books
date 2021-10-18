@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\Genre;
 use App\Models\Author;
 use App\Http\Requests\BookRequest;
+use Symfony\Component\HttpFoundation\Request;
 use App\Interfaces\BookRepository as BookRepository;
 
 class BookController extends Controller
@@ -17,16 +18,24 @@ class BookController extends Controller
         $this->bookRepository = $bookRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
+
+        $resultPaginator = $this->bookRepository->filterBy($search, 15);
+        $resultPaginator->appends([
+            'search' => $search
+        ]);
+
         return view('books.index', [
-            'books' => $this->bookRepository->allPaginated(15)
+            // 'books' => $this->bookRepository->allPaginated(15)
+            'books' => $resultPaginator,
+            'search' => $search
         ]);
     }
 
     public function show(int $id)
     {
-        // dd($this->bookRepository->get($id));
         return view('books.show', [
             'book' => $this->bookRepository->get($id)]
         );
