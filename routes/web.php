@@ -16,6 +16,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'StaticPageController@home')
     ->name('static_pages.home');
 
+Route::prefix('me')->name('me.')->group(function () {
+    Route::get('profile', 'UserController@profile')
+        ->name('profile');
+    
+    Route::get('edit', 'UserController@edit')
+        ->name('edit');
+    
+    Route::put('update', 'UserController@update')
+        ->name('update');
+});
+
 Route::prefix('books')->name('books.')->group(function () {
     Route::get('', 'BookController@index')
         ->name('index');
