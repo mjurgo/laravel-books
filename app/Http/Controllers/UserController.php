@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateUserRequest;
 use App\Interfaces\UserRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -31,10 +32,24 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request)
     {
+        $user = Auth::user();
+        $data = $request->validated();
+
+        if (!empty($data['avatar']))
+        {
+            $path = $data['avatar']->store('avatars', 'public');
+
+            if ($path)
+            {
+                Storage::disk('public')->delete($user->avatar);
+                $data['avatar'] = $path;
+            }
+        }
+
         $this->userRepository->updateModel(
-            Auth::user(), $request->validated());
+            Auth::user(), $data);
 
         return redirect(route('me.profile'))
-            ->with('status', 'Profil zaktualizowany.');
+            ->with('message', 'Profil zaktualizowany.');
     }
 }

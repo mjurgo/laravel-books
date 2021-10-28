@@ -18,6 +18,7 @@ class UserRepository implements UserRepositoryInterface
     {
         $user->email = $data['email'] ?? $user->email;
         $user->name = $data['name'] ?? $user->name;
+        $user->avatar = $data['avatar'] ?? null;
 
         $user->save();
     }

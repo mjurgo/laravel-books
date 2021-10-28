@@ -12,9 +12,13 @@
         </ul>
     @endif
     <div class="w-full max-w-md mx-auto my-4">
-        <form action="{{ route('me.update') }}" method="POST">
+        <form action="{{ route('me.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('put')
+            <div class="my-2">
+                <label for="avatar">Wybierz avatar...</label>
+                <input type="file" name="avatar" id="avatar">
+            </div>
             <div class="my-2">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="name">Nazwa</label>
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="name" type="text" value="{{ old('name', $user->name) }}">

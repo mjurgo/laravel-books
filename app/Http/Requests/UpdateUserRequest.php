@@ -38,6 +38,11 @@ class UpdateUserRequest extends FormRequest
                 'max:50',
                 new AlphaSpaces()
             ],
+            'avatar' => [
+                'nullable',
+                'file',
+                'image'
+            ]
         ];
     }
 
