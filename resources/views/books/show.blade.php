@@ -26,7 +26,7 @@
                                 <option value="" selected disabled>Brak oceny</option>
                             @endif
                             @for ($i = 0; $i < 10; $i++)
-                                <option value="{{ $i + 1 }}" {{ ($book->currentUserRating()->rating == $i + 1) ? 'selected' : '' }}>{{ $i + 1 }}</option>
+                                <option value="{{ $i + 1 }}" {{ ($book->ratedByCurrentUser() && $book->currentUserRating()->rating == $i + 1) ? 'selected' : '' }}>{{ $i + 1 }}</option>
                             @endfor
                         </select>
                         <input type="submit" value="Oceń" class="bg-blue-500 rounded p-2 text-white text-base">

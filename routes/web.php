@@ -19,10 +19,10 @@ Route::get('/', 'StaticPageController@home')
 Route::prefix('me')->name('me.')->group(function () {
     Route::get('profile', 'UserController@profile')
         ->name('profile');
-    
+
     Route::get('edit', 'UserController@edit')
         ->name('edit');
-    
+
     Route::put('update', 'UserController@update')
         ->name('update');
 });
@@ -74,4 +74,4 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
