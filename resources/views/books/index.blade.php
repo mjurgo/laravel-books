@@ -2,9 +2,11 @@
 
 @section('content')
 <h1 class="text-4xl text-center">Książki</h1>
-<div>
-    <a href="{{ route('books.create') }}"><button class="bg-blue-500 rounded p-2 text-white">Dodaj książkę</button></a>
-</div>
+@can('admin-level')
+    <div>
+        <a href="{{ route('books.create') }}"><button class="bg-blue-500 rounded p-2 text-white">Dodaj książkę</button></a>
+    </div>
+@endcan
 <div class="w-fill my-4">
     <table class="w-full p-2">
         <thead>

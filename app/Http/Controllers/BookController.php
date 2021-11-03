@@ -6,6 +6,8 @@ use App\Models\Book;
 use App\Models\Genre;
 use App\Models\Author;
 use App\Http\Requests\BookRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Request;
 use App\Interfaces\BookRepository as BookRepository;
 
@@ -43,6 +45,8 @@ class BookController extends Controller
 
     public function create()
     {
+        Gate::authorize('admin-level');
+
         return view('books.create', [
             'authors' => Author::all(),
             'genres' => Genre::all()
@@ -51,6 +55,7 @@ class BookController extends Controller
 
     public function store(BookRequest $request)
     {
+        Gate::authorize('admin-level');
         $book = new Book();
 
         $book->title = $request->input('title');
@@ -68,6 +73,8 @@ class BookController extends Controller
 
     public function edit($id)
     {
+        Gate::authorize('admin-level');
+
         return view('books.edit', [
             'book' => $this->bookRepository->get($id),
             'authors' => Author::all(),
@@ -77,6 +84,7 @@ class BookController extends Controller
 
     public function update(BookRequest $request, $id)
     {
+        Gate::authorize('admin-level');
         $book = Book::find($id);
 
         $book->title = $request->input('title');
@@ -93,7 +101,9 @@ class BookController extends Controller
 
     public function destroy($id)
     {
+        Gate::authorize('admin-level');
         $book = $this->bookRepository->get($id);
+
         $book->delete();
 
         return redirect(route('books.index'))->with('message', 'Książka usunięta.');
